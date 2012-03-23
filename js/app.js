@@ -39,6 +39,8 @@ var pz = {};
 	pz.init = function(){
 		screen = Raphael('play-stage', '100%', '100%');
 		
+		pz.mobile();
+		
 		pz.screen.draw();
 		pz.player.init();
 		pz.civilians.init();
@@ -57,6 +59,42 @@ var pz = {};
 		}
 
 		pz.play();
+	};
+	
+	pz.mobile = function(){
+	    $(window).bind('acc', function(e) {
+	        console.log("X:" + e.accX, "Y:" + e.accY);
+	        
+	        if (e.accX > 10) {
+	        	// keydown right
+	        	pz.player.keydown({keyCode: 39});
+	        } else if (e.accX >= 0 && e.accX < 10) {
+	        	//keyup right
+	        	pz.player.keyup({keyCode: 39});
+	        } else if (e.accX < -10) {
+	        	// keydown left
+	        	pz.player.keydown({keyCode: 37});	        	
+	        } else if (e.accX > -10 && e.accX <= 0) {
+	        	// keyup left
+	        	pz.player.keyup({keyCode: 37});	        	
+	        }
+	        
+	        if (e.accY > 10) {
+	        	// keydown up
+	        	pz.player.keydown({keyCode: 40});	        	
+	        } else if (e.accY >= 0 && e.accY < 10) {
+	        	//keyup up
+	        	pz.player.keyup({keyCode: 40});	        	
+	        } else if (e.accY < -10) {
+	        	// keydown down
+	        	pz.player.keydown({keyCode: 38});	        	
+	        } else if (e.accY > -10 && e.accY <= 0) {
+	        	// keyup up
+	        	pz.player.keyup({keyCode: 38});	        	
+	        }	        
+	        
+	        
+	    });	
 	};
 	
 	pz.gameOver = function(bool){
